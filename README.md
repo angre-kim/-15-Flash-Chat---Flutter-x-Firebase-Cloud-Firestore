@@ -38,11 +38,11 @@
     
         WelcomeScreen().id: (context) => WelcomeScreen(), 로 수정
         
- WelcomeScreen() widget를 호출하지 않기위해 
+ WelcomeScreen() widget를 호출하지 않기위해 static사용하고 
  
     static String id = 'welcome_screen';
 
-     routes: {
+    routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         
  로 수정

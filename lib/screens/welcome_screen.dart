@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
 
-  String id = 'welcome_screen';
+  static String id = 'welcome_screen';
 
 
   @override

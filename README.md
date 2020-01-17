@@ -21,7 +21,7 @@
 
 ## 171-2
 
-    initialRoute: __'welcomee_screen',__   // 오타나면 에러남
+    initialRoute: 'welcomee_screen',  // 오타나면 에러남
     routes: {
     'welcome_screen': (context) => WelcomeScreen(),
     'login_screen': (context) => LoginScreen(),
@@ -30,10 +30,10 @@
 
 이걸 피하기 위해서 text가 아닌 방식으로 구현
 
-      class WelcomeScreen extends StatefulWidget {
-
-       String id = 'welcome_screen';
-
-       'welcome_screen': (context) => WelcomeScreen(), 대신
-
+    class WelcomeScreen extends StatefulWidget {
+    
+       String id = 'welcome_screen';                //추가하고
+    
+       'welcome_screen': (context) => WelcomeScreen(), //이 부분을 
+    
         WelcomeScreen().id: (context) => WelcomeScreen(), 로 수정

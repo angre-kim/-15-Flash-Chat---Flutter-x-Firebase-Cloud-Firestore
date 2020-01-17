@@ -20,14 +20,15 @@
 
 
 ## 171-2
-    initialRoute: 'welcomee_screen',   // 오타나면 에러남
+
+    initialRoute: __'welcomee_screen',__   // 오타나면 에러남
     routes: {
     'welcome_screen': (context) => WelcomeScreen(),
     'login_screen': (context) => LoginScreen(),
     'registration_screen': (context) => RegistrationScreen(),
     'chat_screen': (context) => ChatScreen(),
 
-      이걸 피하기 위해서 text가 아닌 방식으로 구현
+이걸 피하기 위해서 text가 아닌 방식으로 구현
 
       class WelcomeScreen extends StatefulWidget {
 

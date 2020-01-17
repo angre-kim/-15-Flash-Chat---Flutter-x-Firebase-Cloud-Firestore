@@ -19,32 +19,4 @@
 - How to use Firebase Cloud Firestore to store and retrieve data on the fly.
 
 
-## 171-2
-
-    initialRoute: 'welcomee_screen',  // 오타나면 에러남
-    routes: {
-    'welcome_screen': (context) => WelcomeScreen(),
-    'login_screen': (context) => LoginScreen(),
-    'registration_screen': (context) => RegistrationScreen(),
-    'chat_screen': (context) => ChatScreen(),
-
-이걸 피하기 위해서 text가 아닌 방식으로 구현
-
-    class WelcomeScreen extends StatefulWidget {
-    
-       String id = 'welcome_screen';                //추가하고
-    
-       'welcome_screen': (context) => WelcomeScreen(), //이 부분을 
-    
-        WelcomeScreen().id: (context) => WelcomeScreen(), 로 수정
-        
- WelcomeScreen() widget를 호출하지 않기위해 static사용하고 
- 
-    static String id = 'welcome_screen';
-
-    routes: {
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        
- 로 수정
-    
-    
+## issue에 강의메모 있음

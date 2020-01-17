@@ -20,7 +20,7 @@
 
 
 ## 171-2
--   /*
+-  '''
     initialRoute: 'welcomee_screen',   // 오타나면 에러남
     routes: {
     'welcome_screen': (context) => WelcomeScreen(),
@@ -38,5 +38,4 @@
 
         WelcomeScreen().id: (context) => WelcomeScreen(), 로 수정
 
-          */
-
+      '''

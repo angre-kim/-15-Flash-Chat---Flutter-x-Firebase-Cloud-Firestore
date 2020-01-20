@@ -3,41 +3,38 @@ import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
-
   static const String id = 'welcome_screen';
-
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin{
-
-
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with SingleTickerProviderStateMixin {
   AnimationController controller;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
     controller = AnimationController(
       duration: Duration(seconds: 1),
-      vsync:this,
+      vsync: this,                        //ticker처럼 동작
+      upperBound: 100.0
     );
 
     controller.forward();
 
-    controller.addListener((){
-      setState(() {
-
-      });
+    controller.addListener(() {
+      setState(() {});
       print(controller.value);
-    }    );
-      }
-     @override
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red.withOpacity(controller.value),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -54,7 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                   ),
                 ),
                 Text(
-                  'Flash Chat',
+                  '${controller.value.toInt()}%', //로딩 인디케이터
                   style: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
@@ -73,8 +70,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                 borderRadius: BorderRadius.circular(30.0),
                 child: MaterialButton(
                   onPressed: () {
-                   Navigator.pushNamed(context, LoginScreen.id);
-
+                    Navigator.pushNamed(context, LoginScreen.id);
                   },
                   minWidth: 200.0,
                   height: 42.0,
@@ -92,7 +88,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
-                   Navigator.pushNamed(context, RegistrationScreen.id);
+                    Navigator.pushNamed(context, RegistrationScreen.id);
                   },
                   minWidth: 200.0,
                   height: 42.0,

@@ -21,8 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     controller = AnimationController(
       duration: Duration(seconds: 1),
       vsync: this,                        //ticker처럼 동작
-      upperBound: 100.0
-    );
+        );
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
     controller.forward();
 

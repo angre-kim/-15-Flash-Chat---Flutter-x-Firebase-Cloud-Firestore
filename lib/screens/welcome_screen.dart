@@ -1,3 +1,5 @@
+import 'package:flash_chat/screens/login_screen.dart';
+import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -46,12 +48,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 borderRadius: BorderRadius.circular(30.0),
                 child: MaterialButton(
                   onPressed: () {
-                    //Go to login screen.
+                   Navigator.pushNamed(context, LoginScreen.id);
+
                   },
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
-                    'Log In',
+                    '로그인',
                   ),
                 ),
               ),
@@ -64,12 +67,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
-                    //Go to registration screen.
+                   Navigator.pushNamed(context, RegistrationScreen.id);
                   },
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
-                    'Register',
+                    '회원 가입하기',
                   ),
                 ),
               ),

@@ -19,8 +19,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     super.initState();
 
     controller =
-        AnimationController(duration: Duration(seconds: 3), vsync: this);
-    animation = ColorTween(begin: Colors.red, end: Colors.blue).animate(controller);
+        AnimationController(duration: Duration(seconds: 1), vsync: this);
+    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white).animate(controller);
     controller.forward();
 
     controller.addListener(() {

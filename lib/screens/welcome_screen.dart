@@ -95,7 +95,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
 class RoundedButton extends StatelessWidget {
 
-  RoundedButton({@required colour, @required title, @required onPressed})
+  RoundedButton({this.colour, this.title, @required this.onPressed});
 
   final Color colour;
   final String title;
@@ -109,16 +109,13 @@ class RoundedButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Material(
         elevation: 5.0,
-        color: Colors.lightBlueAccent,
+        color: colour,
         borderRadius: BorderRadius.circular(30.0),
         child: MaterialButton(
-          onPressed: () {
-            Navigator.pushNamed(context, LoginScreen.id);
-          },
+          onPressed: onPressed,
           minWidth: 200.0,
           height: 42.0,
-          child: Text(
-            '로그인',
+          child: Text(            title,
           ),
         ),
       ),

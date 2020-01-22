@@ -18,13 +18,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   void initState() {
     super.initState();
 
-    controller = AnimationController(
-      duration: Duration(seconds: 1),
-      vsync: this,                        //ticker처럼 동작
-        );
+    controller =
+        AnimationController(duration: Duration(seconds: 1), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
-    controller.forward();
-
+    controller.reverse(from:1.0);
     controller.addListener(() {
       setState(() {});
       print(animation.value);
@@ -47,11 +44,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: animation.value,  //controller.value  활용 예
+                    height: animation.value * 100, //controller.value  활용 예
                   ),
                 ),
                 Text(
-                  '${controller.value.toInt()}%', //로딩 인디케이터
+                  'Flash Chat', //로딩 인디케이터
                   style: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,

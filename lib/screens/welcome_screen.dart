@@ -67,24 +67,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             SizedBox(
               height: 48.0,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                elevation: 5.0,
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(30.0),
-                child: MaterialButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, LoginScreen.id);
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    '로그인',
-                  ),
-                ),
-              ),
-            ),
+            RoundedButton(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
@@ -104,6 +87,39 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedButton extends StatelessWidget {
+
+  RoundedButton({@required colour, @required title, @required onPressed})
+
+  final Color colour;
+  final String title;
+  final Function onPressed;
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Material(
+        elevation: 5.0,
+        color: Colors.lightBlueAccent,
+        borderRadius: BorderRadius.circular(30.0),
+        child: MaterialButton(
+          onPressed: () {
+            Navigator.pushNamed(context, LoginScreen.id);
+          },
+          minWidth: 200.0,
+          height: 42.0,
+          child: Text(
+            '로그인',
+          ),
         ),
       ),
     );

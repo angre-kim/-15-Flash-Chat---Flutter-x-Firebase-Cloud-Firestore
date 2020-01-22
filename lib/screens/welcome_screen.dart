@@ -21,8 +21,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     controller =
         AnimationController(duration: Duration(seconds: 1), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
-    controller.reverse(from:1.0);
-    controller.addListener(() {
+    controller.forward();
+    animation.addStatusListener((status){
+      print(status);
+    });
+        controller.addListener(() {
       setState(() {});
       print(animation.value);
     });

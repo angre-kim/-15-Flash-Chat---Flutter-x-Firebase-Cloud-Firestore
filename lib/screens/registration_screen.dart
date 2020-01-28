@@ -11,8 +11,11 @@ class RegistrationScreen extends StatefulWidget {
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
-
 class _RegistrationScreenState extends State<RegistrationScreen> {
+
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,17 +37,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 48.0,
             ),
             TextField(
+              textAlign: TextAlign.center,
               onChanged: (value) {
-                //Do something with the user input.
-              },
+                email = value;
+                              },
               decoration: kTextFieldDecoration.copyWith(hintText: '이메일을 입력하세요'),
             ),
             SizedBox(
               height: 8.0,
             ),
             TextField(
+              textAlign: TextAlign.center,
               onChanged: (value) {
-                //Do something with the user input.
+                password = value;
               },
               decoration: kTextFieldDecoration.copyWith(hintText: '비밀번호를 입력하세요'),
             ),
@@ -54,7 +59,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             RoundedButton(
               title: '가입하기',
               colour: Colors. blueAccent,
-              onPressed: (){},
+              onPressed: (){
+                print('email');
+                print('password');
+              },
               ),
 
           ],

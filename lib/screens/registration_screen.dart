@@ -5,14 +5,13 @@ import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 
 class RegistrationScreen extends StatefulWidget {
-
   static const String id = 'registration_screen';
 
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
-class _RegistrationScreenState extends State<RegistrationScreen> {
 
+class _RegistrationScreenState extends State<RegistrationScreen> {
   String email;
   String password;
 
@@ -40,31 +39,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               textAlign: TextAlign.center,
               onChanged: (value) {
                 email = value;
-                              },
+              },
               decoration: kTextFieldDecoration.copyWith(hintText: '이메일을 입력하세요'),
             ),
             SizedBox(
               height: 8.0,
             ),
             TextField(
+              obscureText: true,
               textAlign: TextAlign.center,
               onChanged: (value) {
                 password = value;
               },
-              decoration: kTextFieldDecoration.copyWith(hintText: '비밀번호를 입력하세요'),
+              decoration:
+                  kTextFieldDecoration.copyWith(hintText: '비밀번호를 입력하세요'),
             ),
             SizedBox(
               height: 24.0,
             ),
             RoundedButton(
               title: '가입하기',
-              colour: Colors. blueAccent,
-              onPressed: (){
+              colour: Colors.blueAccent,
+              onPressed: () {
                 print('email');
                 print('password');
               },
-              ),
-
+            ),
           ],
         ),
       ),

@@ -41,7 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(Icons.close),
               onPressed: () {
                 _auth.signOut();
-                Navigator.pop(context);
+                Navigator.pop(context);// 로그아웃 시 처리
               }),
         ],
         title: Text('⚡️Chat'),

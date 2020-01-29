@@ -1,8 +1,6 @@
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flash_chat/components/rounded_button.dart';
-import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'chat_screen.dart';
 
@@ -14,7 +12,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
   final _auth = FirebaseAuth.instance; //firebase에 있는 auth 인스턴스를 만든다
   String email;
   String password;
@@ -63,24 +60,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 24.0,
             ),
             RoundedButton(
-              title: '가입하기',
-              colour: Colors.blueAccent,
-             // onPressed: () {
-              // _auth.createUserWithEmailAndPassword(email: email, password: password)
-              // Future 을 사용해야 하므로 아래와 같이 만든다
+                title: '가입하기',
+                colour: Colors.blueAccent,
+                // onPressed: () {
+                // _auth.createUserWithEmailAndPassword(email: email, password: password)
+                // Future 을 사용해야 하므로 아래와 같이 만든다
 
-              onPressed: () async {
-               try {
-               final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-              if (newUser != null) {
-                Navigator.pushNamed(context, ChatScreen.id);
-              }
-               }
-              catch (e) {
-               print(e);
-               }
-              }
-            ),
+                onPressed: () async {
+                  try {
+                    final newUser = await _auth.createUserWithEmailAndPassword(
+                      email: email.trim(),
+                      password: password.trim(),
+                    ); //// Flutter - Firebase The email is badly formatted, null 에러시 trim() 추가
+                    if (newUser != null) {
+                      Navigator.pushNamed(context, ChatScreen.id);
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
+                }),
           ],
         ),
       ),

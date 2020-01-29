@@ -65,7 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () async {
                 try {
                   final user = await _auth.signInWithEmailAndPassword(
-                      email: email, password: password);
+                    email: email.trim(),
+                    password: password.trim(),
+                  ); // Flutter - Firebase The email is badly formatted, null 에러시 trim() 추가
                   if (user != null) {
                     Navigator.pushNamed(context, ChatScreen.id);
                   }

@@ -1,8 +1,8 @@
 import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -53,7 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 password = value;
               },
-              decoration: kTextFieldDecoration.copyWith(hintText: '비밀번호를 입력하세요'),
+              decoration:
+                  kTextFieldDecoration.copyWith(hintText: '비밀번호를 입력하세요'),
             ),
             SizedBox(
               height: 24.0,
@@ -61,8 +62,16 @@ class _LoginScreenState extends State<LoginScreen> {
             RoundedButton(
               title: '로그인',
               colour: Colors.lightBlueAccent,
-              onPressed: () {
-                final user = _auth.signInWithEmailAndPassword(email: email, password: password);
+              onPressed: () async {
+                try {
+                  final user = await _auth.signInWithEmailAndPassword(
+                      email: email, password: password);
+                  if (user != null) {
+                    Navigator.pushNamed(context, ChatScreen.id);
+                  }
+                } catch (e) {
+                  print(e);
+                }
               },
             ),
           ],

@@ -34,10 +34,18 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void getMessages() async {
-    final messages = await _firestore.collection('messages').getDocuments();
-    for (var message in messages.documents) {
-      print(message.data);
+//  void getMessages() async {
+//    final messages = await _firestore.collection('messages').getDocuments();
+//    for (var message in messages.documents) {
+//      print(message.data);
+  //  }
+//}
+
+  void messagesStream() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {//listen한다.firebase 대쉬보드에서 입력해도 listen 할 수 있다.
+      for (var message in snapshot.documents) {//전부다
+        print(message.data);
+      }
     }
   }
 
@@ -50,6 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
+                messagesStream();
                 _auth.signOut();
                 Navigator.pop(context);
               }),
@@ -78,7 +87,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   FlatButton(
                     onPressed: () {
                       //messageText + loggedInUser.email
-                      _firestore.collection('messages').add({  //map 타입
+                      _firestore.collection('messages').add({
+                        //map 타입
                         'text': messageText,
                         'sender': loggedInUser.email,
                       });

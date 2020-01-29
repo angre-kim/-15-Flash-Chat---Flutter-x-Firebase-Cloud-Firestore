@@ -42,8 +42,10 @@ class _ChatScreenState extends State<ChatScreen> {
 //}
 
   void messagesStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {//listen한다.firebase 대쉬보드에서 입력해도 listen 할 수 있다.
-      for (var message in snapshot.documents) {//전부다
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      //listen한다.firebase 대쉬보드에서 입력해도 listen 할 수 있다.
+      for (var message in snapshot.documents) {
+        //전부다
         print(message.data);
       }
     }
@@ -58,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                messagesStream();
+                messagesStream(); //
                 _auth.signOut();
                 Navigator.pop(context);
               }),
@@ -71,6 +73,34 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            //streambuilder 시작
+            StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('messages').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                        backgroundColor: Colors.lightBlueAccent,
+                         ),
+                  );
+
+                }
+                  final messages = snapshot.data.documents;
+                  List<Text>messageWidgets = [];
+                  for (var message in messages) {
+                    final messageText = message.data['text'];
+                    final messageSender = message.data['sender'];
+
+                    final messageWidget =
+                        Text('$messageText from $messageSender');
+                    messageWidgets.add(messageWidget);
+                  }
+                  return Column(
+                    children: messageWidgets,
+                  );
+
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -10,8 +11,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _firestore = Firestore.instance; //3rd. cloud에 저장하기 위해
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
+  String messageText; // 1st. cloud에 저장하기 위해
 
   @override
   void initState() {
@@ -41,7 +44,7 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(Icons.close),
               onPressed: () {
                 _auth.signOut();
-                Navigator.pop(context);// 로그아웃 시 처리
+                Navigator.pop(context);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -60,17 +63,21 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
-                        //Do something with the user input.
+                        messageText = value; // 2nd. cloud에 저장하기 위해
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
                     onPressed: () {
-                      //Implement send functionality.
-                    },
+                      //messageText + loggedInUser.email
+                      _firestore.collection('messages').add({  //map 타입
+                        'text': messageText,
+                        'sender': loggedInUser.email,
+                      });
+                    }, //4th. cloud에 저장하기 위해
                     child: Text(
-                      'Send',
+                      '전송',
                       style: kSendButtonTextStyle,
                     ),
                   ),

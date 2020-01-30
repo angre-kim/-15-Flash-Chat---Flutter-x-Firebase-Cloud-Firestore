@@ -86,21 +86,23 @@ class _ChatScreenState extends State<ChatScreen> {
 
                 }
                   final messages = snapshot.data.documents;
-                  List<Text>messageWidgets = [];
+                  List<MessageBubble>messageBubble = [];
                   for (var message in messages) {
                     final messageText = message.data['text'];
                     final messageSender = message.data['sender'];
 
-                    final messageWidget =
-                        Text('$messageText from $messageSender',
-                        style: TextStyle(
-                          fontSize: 30.0,
-                        ),);
-                    messageWidgets.add(messageWidget);
+                    final messageWidget = MessageBubble(
+                      sender: messageSender,
+                      text: messageText,
+                    );
+
+                    messageBubble.add(messageWidget);
                   }
                   return Expanded(
                     child: ListView(
-                      children: messageWidgets,
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                      children: messageBubble,
                     ),
                   );
 
@@ -137,6 +139,35 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+
+  MessageBubble({this.sender, this.text});
+
+  final String sender;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Material(
+
+        color: Colors.lightBlueAccent,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          child: Text(
+            '$text from $sender',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15.0,
+            ),
+          ),
         ),
       ),
     );

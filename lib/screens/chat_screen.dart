@@ -125,7 +125,6 @@ class MessagesStream extends StatelessWidget {
 
           if (currentUser == messageSender) {
             //c.센더에 따른 다른 색상주기 위해
-
           }
           final messageWidget = MessageBubble(
             sender: messageSender,

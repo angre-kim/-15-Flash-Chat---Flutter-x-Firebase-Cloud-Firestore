@@ -130,7 +130,7 @@ class MessagesStream extends StatelessWidget {
             );
 
           }
-          final messages = snapshot.data.documents;
+          final messages = snapshot.data.documents.reversed;//ㄴ. 아래에서 위로 입력 내용 보이게
           List<MessageBubble>messageBubble = [];
           for (var message in messages) {
             final messageText = message.data['text'];

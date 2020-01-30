@@ -3,8 +3,9 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final _firestore = Firestore.instance; //3rd. cloud에 저장하기 위해// widget분리 후 에러방지위해 상위로 위치시킴
-FirebaseUser loggedInUser;//a.센더에 따른 다른 색상주기 위해
+final _firestore =
+    Firestore.instance; //3rd. cloud에 저장하기 위해// widget분리 후 에러방지위해 상위로 위치시킴
+FirebaseUser loggedInUser; //a.센더에 따른 다른 색상주기 위해
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -14,7 +15,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final messageTextController = TextEditingController();//가. 입력창 글자 입력 후 clear 만들기 위해
+  final messageTextController =
+      TextEditingController(); //가. 입력창 글자 입력 후 clear 만들기 위해
   final _auth = FirebaseAuth.instance;
 
   String messageText; // 1st. cloud에 저장하기 위해
@@ -37,23 +39,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-//  void getMessages() async {
-//    final messages = await _firestore.collection('messages').getDocuments();
-//    for (var message in messages.documents) {
-//      print(message.data);
-  //  }
-//}
-
-  void messagesStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      //listen한다.firebase 대쉬보드에서 입력해도 listen 할 수 있다.
-      for (var message in snapshot.documents) {
-        //전부다
-        print(message.data);
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +48,6 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                messagesStream(); //
                 _auth.signOut();
                 Navigator.pop(context);
               }),
@@ -76,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-          MessagesStream(),
+            MessagesStream(),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -84,7 +68,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
-                      controller: messageTextController,//나. 입력창 글자 입력 후 clear 만들기 위해
+                      controller:
+                          messageTextController, //나. 입력창 글자 입력 후 clear 만들기 위해
                       onChanged: (value) {
                         messageText = value; // 2nd. cloud에 저장하기 위해
                       },
@@ -93,7 +78,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      messageTextController.clear();//다. 입력창 글자 입력 후 clear 만들기 위해
+                      messageTextController
+                          .clear(); //다. 입력창 글자 입력 후 clear 만들기 위해
                       _firestore.collection('messages').add({
                         //map 타입
                         'text': messageText,
@@ -118,53 +104,50 @@ class _ChatScreenState extends State<ChatScreen> {
 class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return   //streambuilder 시작
-      StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection('messages').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.lightBlueAccent,
-              ),
-            );
-
-          }
-          final messages = snapshot.data.documents.reversed;//ㄴ. 아래에서 위로 입력 내용 보이게
-          List<MessageBubble>messageBubble = [];
-          for (var message in messages) {
-            final messageText = message.data['text'];
-            final messageSender = message.data['sender'];
-            final currentUser = loggedInUser.email;//b.센더에 따른 다른 색상주기 위해
-
-            if (currentUser == messageSender){ //c.센더에 따른 다른 색상주기 위해
-
-            }
-            final messageWidget = MessageBubble(
-              sender: messageSender,
-              text: messageText,
-              isMe: currentUser == messageSender,//e.센더에 따른 다른 색상주기 위해
-            );
-
-            messageBubble.add(messageWidget);
-          }
-          return Expanded(
-            child: ListView(
-              reverse: true,//ㄱ.입력창 고정시키고 그 위에서 위로 스크롤되게 하기위해
-              padding:
-              EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-              children: messageBubble,
+    return //streambuilder 시작
+        StreamBuilder<QuerySnapshot>(
+      stream: _firestore.collection('messages').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.lightBlueAccent,
             ),
           );
+        }
+        final messages =
+            snapshot.data.documents.reversed; //ㄴ. 아래에서 위로 입력 내용 보이게
+        List<MessageBubble> messageBubble = [];
+        for (var message in messages) {
+          final messageText = message.data['text'];
+          final messageSender = message.data['sender'];
+          final currentUser = loggedInUser.email; //b.센더에 따른 다른 색상주기 위해
 
-        },
-      );
+          if (currentUser == messageSender) {
+            //c.센더에 따른 다른 색상주기 위해
+
+          }
+          final messageWidget = MessageBubble(
+            sender: messageSender,
+            text: messageText,
+            isMe: currentUser == messageSender, //e.센더에 따른 다른 색상주기 위해
+          );
+
+          messageBubble.add(messageWidget);
+        }
+        return Expanded(
+          child: ListView(
+            reverse: true, //ㄱ.입력창 고정시키고 그 위에서 위로 스크롤되게 하기위해
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            children: messageBubble,
+          ),
+        );
+      },
+    );
   }
 }
 
-
 class MessageBubble extends StatelessWidget {
-
   MessageBubble({this.sender, this.text, this.isMe});
 
   final String sender;
@@ -176,7 +159,9 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,//g.센더에 따른 다른 위치 위해
+        crossAxisAlignment: isMe
+            ? CrossAxisAlignment.end
+            : CrossAxisAlignment.start, //g.센더에 따른 다른 위치 위해
         children: <Widget>[
           Text(
             sender,
@@ -186,24 +171,29 @@ class MessageBubble extends StatelessWidget {
             ),
           ),
           Material(
-            borderRadius: isMe?
-             BorderRadius.only(//센더에 따른 화살표 방향 수정
-              topLeft: Radius.circular(30.0),
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0)):
-                 BorderRadius.only(
-                 topRight: Radius.circular(30.0),
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
-            ),
-            elevation: 5.0,// elevation 주기
-            color: isMe ? Colors.lightBlueAccent : Colors.white,//e.센더에 따른 다른 색상주기 위해
+            borderRadius: isMe
+                ? BorderRadius.only(
+                    //센더에 따른 화살표 방향 수정
+                    topLeft: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0))
+                : BorderRadius.only(
+                    topRight: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0),
+                  ),
+            elevation: 5.0, // elevation 주기
+            color: isMe
+                ? Colors.lightBlueAccent
+                : Colors.white, //e.센더에 따른 다른 색상주기 위해
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 text,
                 style: TextStyle(
-                  color: isMe ? Colors.white : Colors.black54,//f.센더에 따른 다른 색상주기 위해
+                  color: isMe
+                      ? Colors.white
+                      : Colors.black54, //f.센더에 따른 다른 색상주기 위해
                   fontSize: 15.0,
                 ),
               ),

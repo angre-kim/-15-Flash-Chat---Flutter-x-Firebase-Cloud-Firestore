@@ -175,7 +175,7 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,//g.센더에 따른 다른 위치 위해
         children: <Widget>[
           Text(
             sender,
@@ -185,8 +185,13 @@ class MessageBubble extends StatelessWidget {
             ),
           ),
           Material(
-            borderRadius: BorderRadius.only(//화살표 모양으로 만들기 위해
+            borderRadius: isMe?
+             BorderRadius.only(//센더에 따른 화살표 방향 수정
               topLeft: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0)):
+                 BorderRadius.only(
+                 topRight: Radius.circular(30.0),
               bottomLeft: Radius.circular(30.0),
               bottomRight: Radius.circular(30.0),
             ),

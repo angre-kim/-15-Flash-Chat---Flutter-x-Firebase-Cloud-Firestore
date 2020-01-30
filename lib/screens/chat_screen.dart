@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _firestore = Firestore.instance; //3rd. cloud에 저장하기 위해// widget분리 후 에러방지위해 상위로 위치시킴
+FirebaseUser loggedInUser;//a.센더에 따른 다른 색상주기 위해
+
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
 
@@ -14,7 +16,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();//가. 입력창 글자 입력 후 clear 만들기 위해
   final _auth = FirebaseAuth.instance;
-  FirebaseUser loggedInUser;
+
   String messageText; // 1st. cloud에 저장하기 위해
 
   @override
@@ -133,10 +135,15 @@ class MessagesStream extends StatelessWidget {
           for (var message in messages) {
             final messageText = message.data['text'];
             final messageSender = message.data['sender'];
+            final currentUser = loggedInUser.email;//b.센더에 따른 다른 색상주기 위해
 
+            if (currentUser == messageSender){ //c.센더에 따른 다른 색상주기 위해
+
+            }
             final messageWidget = MessageBubble(
               sender: messageSender,
               text: messageText,
+              isMe: currentUser == messageSender,//e.센더에 따른 다른 색상주기 위해
             );
 
             messageBubble.add(messageWidget);
@@ -157,10 +164,11 @@ class MessagesStream extends StatelessWidget {
 
 class MessageBubble extends StatelessWidget {
 
-  MessageBubble({this.sender, this.text});
+  MessageBubble({this.sender, this.text, this.isMe});
 
   final String sender;
   final String text;
+  final bool isMe; //d.센더에 따른 다른 색상주기 위해
 
   @override
   Widget build(BuildContext context) {
@@ -181,15 +189,15 @@ class MessageBubble extends StatelessWidget {
               topLeft: Radius.circular(30.0),
               bottomLeft: Radius.circular(30.0),
               bottomRight: Radius.circular(30.0),
-            )
+            ),
             elevation: 5.0,// elevation 주기
-            color: Colors.lightBlueAccent,
+            color: isMe ? Colors.lightBlueAccent : Colors.white,//e.센더에 따른 다른 색상주기 위해
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 text,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: isMe ? Colors.white : Colors.black54,//f.센더에 따른 다른 색상주기 위해
                   fontSize: 15.0,
                 ),
               ),

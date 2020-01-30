@@ -158,7 +158,13 @@ class MessageBubble extends StatelessWidget {
       padding: EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
-          Text(sender),
+          Text(
+            sender,
+            style: TextStyle(
+              fontSize: 12.0,
+              color: Colors.black54,
+            ),
+          ),
           Material(
             borderRadius: BorderRadius.circular(30.0),//버블형태 만들기
             elevation: 5.0,// elevation 주기

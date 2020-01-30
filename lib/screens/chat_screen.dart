@@ -177,7 +177,11 @@ class MessageBubble extends StatelessWidget {
             ),
           ),
           Material(
-            borderRadius: BorderRadius.circular(30.0),//버블형태 만들기
+            borderRadius: BorderRadius.only(//화살표 모양으로 만들기 위해
+              topLeft: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
+            )
             elevation: 5.0,// elevation 주기
             color: Colors.lightBlueAccent,
             child: Padding(

@@ -12,7 +12,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-
+  final messageTextController = TextEditingController();//가. 입력창 글자 입력 후 clear 만들기 위해
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
   String messageText; // 1st. cloud에 저장하기 위해
@@ -82,6 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      controller: messageTextController,//나. 입력창 글자 입력 후 clear 만들기 위해
                       onChanged: (value) {
                         messageText = value; // 2nd. cloud에 저장하기 위해
                       },
@@ -90,7 +91,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      //messageText + loggedInUser.email
+                      messageTextController.clear();//다. 입력창 글자 입력 후 clear 만들기 위해
                       _firestore.collection('messages').add({
                         //map 타입
                         'text': messageText,

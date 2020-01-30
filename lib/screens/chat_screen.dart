@@ -150,6 +150,7 @@ class MessagesStream extends StatelessWidget {
           }
           return Expanded(
             child: ListView(
+              reverse: true,//ㄱ.입력창 고정시키고 그 위에서 위로 스크롤되게 하기위해
               padding:
               EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
               children: messageBubble,

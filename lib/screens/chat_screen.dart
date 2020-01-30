@@ -3,6 +3,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+final _firestore = Firestore.instance; //3rd. cloud에 저장하기 위해// widget분리 후 에러방지위해 상위로 위치시킴
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
 
@@ -11,7 +12,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final _firestore = Firestore.instance; //3rd. cloud에 저장하기 위해
+
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedInUser;
   String messageText; // 1st. cloud에 저장하기 위해

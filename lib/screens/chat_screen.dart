@@ -3,8 +3,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final _firestore =
-    Firestore.instance; //3rd. cloud에 저장하기 위해// widget분리 후 에러방지위해 상위로 위치시킴
+final _firestore = Firestore.instance; //3rd. cloud에 저장하기 위해// widget분리 후 에러방지위해 상위로 위치시킴
 FirebaseUser loggedInUser; //a.센더에 따른 다른 색상주기 위해
 
 class ChatScreen extends StatefulWidget {
@@ -52,7 +51,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Navigator.pop(context);
               }),
         ],
-        title: Text('⚡️Chat'),
+        title: Text('⚡️플러터 채팅앱'),
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(

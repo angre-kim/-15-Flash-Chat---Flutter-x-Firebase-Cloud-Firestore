@@ -22,14 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ModalProgressHUD(inAsyncCall: showSpinner,
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Flexible(//가입화면에서 안드로이드 경우 깨지는 경우 방지하기위해
+              Flexible(
+                //가입화면에서 안드로이드 경우 깨지는 경우 방지하기위해
                 child: Hero(
                   tag: 'logo',
                   child: Container(
@@ -47,7 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {
                   email = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: '이메일을 입력하세요'),
+                decoration:
+                    kTextFieldDecoration.copyWith(hintText: '이메일을 입력하세요'),
               ),
               SizedBox(
                 height: 8.0,
@@ -69,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 colour: Colors.lightBlueAccent,
                 onPressed: () async {
                   setState(() {
-                    showSpinner =true;
+                    showSpinner = true;
                   });
                   try {
                     final user = await _auth.signInWithEmailAndPassword(
